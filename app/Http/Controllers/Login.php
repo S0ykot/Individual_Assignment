@@ -8,9 +8,18 @@ use App\User;
 
 class Login extends Controller
 {
-    public function index()
+    public function index(Request $req)
     {
-    	return view('login.index');
+        if ($req->session()->has('password') AND $req->session()->get('type')=='1') {
+            return redirect('/admin');
+        }
+        elseif ($req->session()->has('password') AND $req->session()->get('type')=='2') {
+            return redirect('/user');
+        }
+    	else
+        {
+            return view('login.index');
+        }
     }
     public function verify(Request $req)
     {
@@ -20,7 +29,7 @@ class Login extends Controller
         ]);
 
     	if ($validate->fails()) {
-    		return redirect('/signup')
+    		return redirect('/login')
                         ->withErrors($validate)
                         ->withInput();
     	}
@@ -40,6 +49,7 @@ class Login extends Controller
                     $req->session()->put('password', md5($req->password));
                     $req->session()->put('userid', $req->username);
                     $req->session()->put('type', $check->toArray()['dept_id']);
+                    return redirect('/user');
                 }
     		}
     		else

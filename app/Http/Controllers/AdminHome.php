@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\User;
 class AdminHome extends Controller
 {
@@ -21,19 +22,43 @@ class AdminHome extends Controller
    	public function profileUpdate(Request $req)
    	{
 
-   		$data =User::where('username',$req->session()->get('userid'))->first();
-   		$user = User::find($data->toArray()['id']);
+   		$validate = Validator::make($req->all(), [
+            'fullname' => 'required|max:30',
+            'password' => 'required',
+            'email' => 'required|email'
+        ]);
 
-   		$user->fullname = $req->fullname;
-   		$user->email = $req->email;
+    	if ($validate->fails()) {
+    		return redirect('/admin/profile')
+                        ->withErrors($validate)
+                        ->withInput();
+    	}
 
-   		if ($user->save()) {
-   			return redirect('/admin/profile');
-   		}
-   		else
-   		{
-   			echo "Something wrong";
-   		}
+    	else
+    	{
+    		$data =User::where('username',$req->session()->get('userid'))->first();
+   			$user = User::find($data->toArray()['id']);
+
+   			$user->fullname = $req->fullname;
+   			$user->email = $req->email;
+
+   			if ($user->password!=$req->password) {
+   				return redirect('/admin/profile')->withErrors("Current Password not matching");
+   			}
+   			else
+   			{
+   				if ($user->save()) {
+	   				return redirect('/admin/profile')->withErrors("Profile Update successfully");
+		   		}
+		   		else
+		   		{
+		   			echo "Something wrong";
+		   		}
+   			}
+
+	   		
+    	}
+   		
    	}
 
 }

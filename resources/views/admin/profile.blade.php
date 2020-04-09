@@ -42,6 +42,9 @@
 	</table>
 	<br>
 	<a href="/admin">Back</a>
+	@if($errors->any())
+    {!! implode('', $errors->all('<div><br><p>*:message</p></div>')) !!}
+	@endif
 	</form>
 </center>
 </body>
