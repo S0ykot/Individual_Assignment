@@ -69,4 +69,10 @@ class AdminHome extends Controller
    		return view('admin.userlist',['details'=>$data]);
    	}
 
+   	public function deleteUser($id)
+   	{
+   		$user = User::destroy($id);
+   		return redirect('/admin/userlist')->withErrors("User deleted");
+   	}
+
 }
