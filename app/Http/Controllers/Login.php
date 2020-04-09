@@ -30,11 +30,13 @@ class Login extends Controller
     						->where('password',$req->password)->first();
     		if (count($check)==1) {
     			if ($check->toArray()['type']=='admin') {
-    				echo "Admin I have got you";
+                    $req->session()->put('password', md5($req->uname));
+                    $req->session()->put('type', $check->toArray()['type']);
+                    
     			}
     			else
     			{
-    				echo "p00r user";
+    				//echo "p00r user";
     			}
     		}
     		else

@@ -22,3 +22,24 @@ Route::post('/login', 'Login@verify');
 
 Route::get('/signup', 'Signup@index');
 Route::post('/signup', 'Signup@signup');
+
+Route::get('/logout', 'Logout@index');
+
+Route::group(['middleware'=>['session']], function(){
+
+	Route::group(['middleware'=>['admin']], function(){
+		Route::get('/admin', function()
+		{
+			echo "Admin type working";
+		});
+	});
+
+	Route::group(['middleware'=>['user']], function(){
+		Route::get('/user', function()
+		{
+			echo "User type working";
+		});
+	});
+
+	
+});
