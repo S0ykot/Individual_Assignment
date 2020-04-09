@@ -9,6 +9,7 @@
     <br>
     <br>
     <hr>
+    <h2>You are not allowed to access this page</h2>
 </center>
 </body>
 </html>

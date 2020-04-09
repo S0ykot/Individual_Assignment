@@ -16,6 +16,13 @@ Route::get('/', function()
 	return view('home.index');
 });
 
+
+Route::get('/error', function()
+{
+	return view('error');
+});
+
+
 Route::get('/login', 'Login@index');
 Route::post('/login', 'Login@verify');
 

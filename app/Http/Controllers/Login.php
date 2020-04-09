@@ -29,15 +29,16 @@ class Login extends Controller
     		$check = User::where('username',$req->username)
     						->where('password',$req->password)->first();
     		if (count($check)==1) {
-    			if ($check->toArray()['type']=='admin') {
+    			if ($check->toArray()['dept_id']=='1') {
                     $req->session()->put('password', md5($req->uname));
-                    $req->session()->put('type', $check->toArray()['type']);
-                    
+                    $req->session()->put('type', $check->toArray()['dept_id']);
+
     			}
-    			else
-    			{
-    				//echo "p00r user";
-    			}
+    			elseif ($check->toArray()['dept_id']=='2') {
+                    $req->session()->put('password', md5($req->uname));
+                    $req->session()->put('type', $check->toArray()['dept_id']);
+
+                }
     		}
     		else
     		{

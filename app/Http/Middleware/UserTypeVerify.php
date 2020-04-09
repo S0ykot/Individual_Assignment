@@ -15,10 +15,10 @@ class UserTypeVerify
      */
     public function handle($request, Closure $next)
     {
-        if(!$req->session()->get('type')=='user'){
-            return viwe('error');
+        if($request->session()->get('type')=='2'){
+            return $next($request);
         }
+       return redirect('/error');
         
-        return $next($request);
     }
 }

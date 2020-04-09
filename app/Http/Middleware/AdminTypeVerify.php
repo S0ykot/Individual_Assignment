@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class TypeVerify
+class AdminTypeVerify
 {
     /**
      * Handle an incoming request.
@@ -15,10 +15,11 @@ class TypeVerify
      */
     public function handle($request, Closure $next)
     {
-         if(!$req->session()->get('type')=='admin'){
-            return viwe('error');
+         if($request->session()->get('type')=='1'){
+            return $next($request);
+            
         }
+        return redirect('/error');
         
-        return $next($request);
     }
 }
