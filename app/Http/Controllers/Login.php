@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\User;
 
 class Login extends Controller
 {
@@ -25,7 +26,21 @@ class Login extends Controller
     	}
     	else
     	{
-    		
+    		$check = User::where('username',$req->username)
+    						->where('password',$req->password)->first();
+    		if (count($check)==1) {
+    			if ($check->toArray()['type']=='admin') {
+    				echo "Admin I have got you";
+    			}
+    			else
+    			{
+    				echo "p00r user";
+    			}
+    		}
+    		else
+    		{
+    			echo "Something wrong";
+    		}
     	}
     }
 }

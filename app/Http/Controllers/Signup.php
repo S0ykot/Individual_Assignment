@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\User;
 
 class Signup extends Controller
 {
@@ -28,7 +29,22 @@ class Signup extends Controller
     	}
     	else
     	{
-    		
+    		$user = new User;
+            $user->id = NULL;
+            $user->fullname = $req->name;
+            $user->username = $req->username;
+            $user->password = $req->password;
+            $user->email = $req->email;
+            $user->dept_id = $req->type;
+
+            if ($user->save()) {
+                return redirect('/login')->withErrors('SignUp Failed');
+            }               
+            else
+            {
+                return redirect('/signup')
+                                ->withErrors('SignUp Failed');
+            }
     	}
     }
 }
