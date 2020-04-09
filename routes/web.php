@@ -42,6 +42,12 @@ Route::group(['middleware'=>['session']], function(){
 
 		Route::get('/admin/userlist', 'AdminHome@userlist');
 		Route::get('/admin/userlist/delete/{id}', 'AdminHome@deleteUser');
+
+		Route::get('/admin/medicine', 'Medicine@index');
+		Route::get('admin/medicine/addCategory', 'Medicine@addCategoryView');
+		Route::post('admin/medicine/addCategory', 'Medicine@addCategory');
+
+		Route::get('admin/medicine/addSubCategory', 'Medicine@addSubCategoryView');
 	});
 
 	Route::group(['middleware'=>['user']], function(){
