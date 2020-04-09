@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use App\Subcategory;
 use App\Category;
 
@@ -54,5 +55,41 @@ class Medicine extends Controller
     {
     	$cat = Category::all();
     	return view('admin.addSubCategory',['cat'=>$cat]);
+    }
+
+    public function addSubCategory(Request $req)
+    {
+    	$validate = Validator::make($req->all(), [
+            'SubcatName' => 'required|max:40',
+            'catName' => 'required'
+        ]);
+
+    	if ($validate->fails()) {
+    		return redirect('/admin/medicine/addSubCategory')
+                        ->withErrors($validate)
+                        ->withInput();
+    	}
+    	else
+    	{
+    		$subcat = new Subcategory;
+    		$subcat->subcat_id = NULL;
+    		$subcat->subcat_name = $req->SubcatName;
+    		$subcat->cat_id = $req->catName;
+
+    		if ($subcat->save()) {
+    			return redirect('/admin/medicine/addSubCategory')
+                        ->withErrors('SubCategory Added');
+    		}
+    		else
+    		{
+    			return redirect('/admin/medicine/addSubCategory')
+                        ->withErrors('SubCategory Add failed');
+    		}
+    	}
+    }
+
+    public function addMedicienView()
+    {
+    	return view('admin.addMedicine');
     }
 }
