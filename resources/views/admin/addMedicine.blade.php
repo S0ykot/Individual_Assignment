@@ -87,6 +87,18 @@
 			<th>Category</th>
 			<th>SubCategory</th>
 		</tr>
+		
+			@for($i=0;$i< count($m);$i++)
+		<tr>
+			<td>{{$m[$i]->id}}</td>
+			<td>{{$m[$i]->name}}</td>
+			<td>{{$m[$i]->quantity}}</td>
+			<td>{{$m[$i]->vendor}}</td>
+			<td>{{$m[$i]->cat_name}}</td>
+			<td>{{$m[$i]->subcat_name}}</td>
+			
+		</tr>
+			@endfor
 	</table>
 </center>
 </body>

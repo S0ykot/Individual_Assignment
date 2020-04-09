@@ -96,7 +96,9 @@ class Medicines extends Controller
     			->join('subcategories','medicines.subcat_id','=','subcategories.subcat_id')
     			->join('categories','categories.cat_id','=','subcategories.cat_id')
     			->get();
-    	return view('admin.addMedicine',['cat'=>$cat,'m'=>$data]);
+
+    	$med = $data->toArray();
+    	return view('admin.addMedicine',['cat'=>$cat,'m'=>$med]);
     }
 
     public function addMedicien(Request $req)
