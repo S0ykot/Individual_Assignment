@@ -61,4 +61,12 @@ class AdminHome extends Controller
    		
    	}
 
+
+   	public function userlist()
+   	{
+   		$data = User::all();
+
+   		return view('admin.userlist',['details'=>$data]);
+   	}
+
 }
