@@ -30,19 +30,23 @@ class Login extends Controller
     						->where('password',$req->password)->first();
     		if (count($check)==1) {
     			if ($check->toArray()['dept_id']=='1') {
-                    $req->session()->put('password', md5($req->uname));
+                    $req->session()->put('password', md5($req->password));
+                    $req->session()->put('userid', $req->username);
                     $req->session()->put('type', $check->toArray()['dept_id']);
+                    return redirect('/admin');
 
     			}
     			elseif ($check->toArray()['dept_id']=='2') {
-                    $req->session()->put('password', md5($req->uname));
+                    $req->session()->put('password', md5($req->password));
+                    $req->session()->put('userid', $req->username);
                     $req->session()->put('type', $check->toArray()['dept_id']);
-
                 }
     		}
     		else
     		{
-    			echo "Something wrong";
+    			return redirect('/login')
+                        ->withErrors('Login Failed');
+
     		}
     	}
     }
