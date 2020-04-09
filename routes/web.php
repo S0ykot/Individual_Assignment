@@ -43,15 +43,21 @@ Route::group(['middleware'=>['session']], function(){
 		Route::get('/admin/userlist', 'AdminHome@userlist');
 		Route::get('/admin/userlist/delete/{id}', 'AdminHome@deleteUser');
 
-		Route::get('/admin/medicine', 'Medicine@index');
-		Route::get('/admin/medicine/addCategory', 'Medicine@addCategoryView');
-		Route::post('/admin/medicine/addCategory', 'Medicine@addCategory');
+		Route::get('/admin/medicine', 'Medicines@index');
+		Route::get('/admin/medicine/addCategory', 'Medicines@addCategoryView');
+		Route::post('/admin/medicine/addCategory', 'Medicines@addCategory');
 
-		Route::get('/admin/medicine/addSubCategory', 'Medicine@addSubCategoryView');
-		Route::post('/admin/medicine/addSubCategory', 'Medicine@addSubCategory');
+		Route::get('/admin/medicine/addSubCategory', 'Medicines@addSubCategoryView');
+		Route::post('/admin/medicine/addSubCategory', 'Medicines@addSubCategory');
+
+		Route::get('/admin/medicine/addMedicine', 'Medicines@addMedicienView');
+		Route::post('/admin/medicine/addMedicine', 'Medicines@addMedicien');
+
+		Route::get('/admin/get/{id}', 'AdminHome@getSubcat');
 
 
-		Route::get('/admin/medicine/addMedicine', 'Medicine@addMedicienView');
+
+
 	});
 
 	Route::group(['middleware'=>['user']], function(){

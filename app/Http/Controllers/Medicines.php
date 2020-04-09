@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use App\Subcategory;
 use App\Category;
+use App\Medicine;
 
-class Medicine extends Controller
+class Medicines extends Controller
 {
     public function index()
     {
@@ -89,7 +90,56 @@ class Medicine extends Controller
     }
 
     public function addMedicienView()
-    {
-    	return view('admin.addMedicine');
+    {	
+    	$cat = Category::all();
+    	$data = DB::table('medicines')
+    			->join('subcategories','medicines.subcat_id','=','subcategories.subcat_id')
+    			->join('categories','categories.cat_id','=','subcategories.cat_id')
+    			->get();
+    	return view('admin.addMedicine',['cat'=>$cat,'m'=>$data]);
     }
+
+    public function addMedicien(Request $req)
+    {	
+    	
+    	$validate = Validator::make($req->all(), [
+            'medicinName' => 'required|max:40',
+            'quantity' => 'required|numeric',
+            'vendor' => 'required|max:50',
+            'price' => 'required|numeric',
+            'catName' => 'required|numeric',
+            'subcat' => 'required|numeric',
+        ]);
+
+    	if ($validate->fails()) {
+    		return redirect('/admin/medicine/addMedicine')
+                        ->withErrors($validate)
+                        ->withInput();
+    	}
+    	else
+    	{
+    		$med = new Medicine;
+
+    		$med->id = NULL;
+    		$med->name = $req->medicinName;
+    		$med->quantity = $req->quantity;
+    		$med->vendor = $req->vendor;
+    		$med->price = $req->price;
+    		$med->subcat_id = $req->subcat;
+
+    		if ($med->save()) {
+    			return redirect('/admin/medicine/addMedicine')
+                        ->withErrors('Medicine added successfully')
+                        ->withInput();
+    		}
+    		else
+    		{
+    			return redirect('/admin/medicine/addMedicine')
+                        ->withErrors('Medicine doesnot added')
+                        ->withInput();
+    		}
+    	}
+    }
+
+
 }

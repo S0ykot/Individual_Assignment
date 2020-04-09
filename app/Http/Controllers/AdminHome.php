@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\User;
+use App\Subcategory;
+
 class AdminHome extends Controller
 {
     public function index()
@@ -74,5 +76,12 @@ class AdminHome extends Controller
    		$user = User::destroy($id);
    		return redirect('/admin/userlist')->withErrors("User deleted");
    	}
+
+    public function getSubcat($id)
+    {
+        $subcat = Subcategory::where('cat_id',$id)->get();
+        return view('admin.subcatWithCat',['data'=>$subcat]);
+
+    }
 
 }
