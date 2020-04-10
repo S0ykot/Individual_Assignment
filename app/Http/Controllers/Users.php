@@ -104,4 +104,9 @@ class Users extends Controller
 	   		
     	}
    	}
+
+   	public function cart()
+   	{
+   		return view('user.cart');
+   	}
 }

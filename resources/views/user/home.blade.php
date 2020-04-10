@@ -8,7 +8,7 @@
 		<h1>Welcome {{ Session::get('userid') }}</h1>
 		<br>
 		<fieldset>
-			<a href="/">Home Site</a> || <a href="/user/profile">Profile</a> || <a href="/users/orders">Orders</a> || <a href="/user/passwordchange">Password Change</a> ||<a href="/logout">Logout</a>
+			<a href="/">Home Site</a> || <a href="/user/profile">Profile</a> || <a href="/users/orders">Orders</a> || <a href="/user/passwordchange">Password Change</a> || <a href="/user/cart">Cart</a> ||<a href="/logout">Logout</a>
 		</fieldset>
 	</center>
 

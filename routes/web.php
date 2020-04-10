@@ -62,6 +62,7 @@ Route::group(['middleware'=>['session']], function(){
 
 	Route::group(['middleware'=>['user']], function(){
 		Route::get('/user','Users@index');
+		Route::get('/user/cart','Users@cart');
 
 		Route::get('/user/profile','Users@profile');
 		Route::post('/user/profile','Users@profileUpdate');

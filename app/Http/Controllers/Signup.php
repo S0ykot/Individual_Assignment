@@ -38,7 +38,7 @@ class Signup extends Controller
             $user->dept_id = $req->type;
 
             if ($user->save()) {
-                return redirect('/login')->withErrors('SignUp Failed');
+                return redirect('/login')->withErrors('Login with new credential');
             }               
             else
             {
