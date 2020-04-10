@@ -61,10 +61,10 @@ Route::group(['middleware'=>['session']], function(){
 	});
 
 	Route::group(['middleware'=>['user']], function(){
-		Route::get('/user', function()
-		{
-			echo "User type working";
-		});
+		Route::get('/user','Users@index');
+
+		Route::get('/user/profile','Users@profile');
+		Route::post('/user/profile','Users@profileUpdate');
 	});
 
 	
