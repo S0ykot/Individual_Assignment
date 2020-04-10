@@ -78,6 +78,11 @@ Route::group(['middleware'=>['session']], function(){
 		Route::get('/user/passwordchange','Users@passwordChangeView');
 		Route::post('/user/passwordchange','Users@passwordChange');
 
+		Route::get('/user/cart/remove/{id}','Carts@cartRemove');
+
+		Route::get('/user/cart/edit/{id}','Carts@cartEditView');
+		Route::post('/user/cart/edit/{id}','Carts@cartEdit');
+
 
 	});
 

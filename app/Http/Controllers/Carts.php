@@ -67,4 +67,99 @@ class Carts extends Controller
 
     	}
     }
+
+    public function cartEditView($id)
+    {
+    	$data = DB::table('carts')
+    				->join('medicines','carts.mid','=','medicines.mid')
+    				->where('id',$id)->first();
+
+    		return view('user.cartEdit',['cart'=>$data]);
+    }
+
+    public function cartEdit(Request $req,$id)
+    {
+    	$validate = Validator::make($req->all(), [
+            'Quantity' => 'required|numeric',
+            'price' => 'numeric'
+        ]);
+
+    	if ($validate->fails()) {
+    		return redirect('/user/cart/edit/'.$id)
+                        ->withErrors($validate)
+                        ->withInput();
+    	}
+    	else
+    	{
+
+
+    		$data = DB::table('carts')
+    				->join('medicines','carts.mid','=','medicines.mid')
+    				->where('id',$id)->first();
+
+    		if ($req->Quantity>$data->quantity) {
+    			return redirect('/user/cart/edit/'.$id)
+                        ->withErrors(" Out of stock")
+                        ->withInput();
+    		}
+    		else
+    		{
+    			$cart = Cart::find($id);
+    			$medQUpdate = $req->Quantity-$cart->qntity;
+    			$cart->qntity = $req->Quantity;
+    			$cart->total_price = $data->price*$req->Quantity;
+
+
+    			if ($cart->save()) {
+    			
+    				$med = Medicine::find($data->mid);
+    				$med->quantity = $data->quantity - $medQUpdate;
+
+    				if ($med->save()) {
+    					return redirect('/user/cart')
+                        		->withErrors(" Cart updated");
+    				}
+    				else
+    				{
+    					return redirect('/user/cart')
+                        		->withErrors(" Cart update failed");
+    				}
+
+    			}
+    			else
+    			{
+    				return redirect('/user/cart')
+                        ->withErrors(" Cart update failed");
+    			}
+
+    		}
+
+    	}
+    }
+
+
+    public function cartRemove($id)
+    {
+    	$cart = Cart::find($id);
+    	$med = Medicine::find($cart['mid']);
+    	$med->quantity = $med->quantity+$cart['qntity'];
+
+    	if ($med->save()) {
+    		$des = Cart::destroy($id);
+    		if ($des) {
+    			return redirect('/user/cart')
+                        ->withErrors(" Medicine removed");
+    		}
+    		else
+    		{
+    			return redirect('/user/cart')
+                        ->withErrors(" Remove failed");
+    		}
+    	}
+    	else
+    	{
+    		return redirect('/user/cart')
+                        ->withErrors(" Remove failed");
+    	}
+    }
 }

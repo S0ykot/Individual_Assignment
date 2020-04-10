@@ -18,7 +18,7 @@
 		</tr>
 		@for($i=0;$i< count($cart);$i++)
 			<tr>
-				<td align="center">{{$cart[$i]->mid}}</td>
+				<td align="center">{{$cart[$i]->id}}</td>
 				<td align="center">{{$cart[$i]->name}}</td>
 				<td align="center">{{$cart[$i]->price}}</td>
 				<td align="center">{{$cart[$i]->qntity}}</td>
@@ -42,6 +42,10 @@
 	</table>
 	<a href="/">Back</a> ||
 	<a href="/user">My Account</a>
+
+	@if($errors->any())
+    {!! implode('', $errors->all('<div><br><p style="color:green">*:message</p></div>')) !!}
+	@endif
 </center>
 </body>
 </html>
