@@ -81,7 +81,6 @@ class AdminHome extends Controller
     {
         $subcat = Subcategory::where('cat_id',$id)->get();
         return view('admin.subcatWithCat',['data'=>$subcat]);
-
     }
 
 }

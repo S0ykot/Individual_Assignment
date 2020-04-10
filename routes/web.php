@@ -65,6 +65,12 @@ Route::group(['middleware'=>['session']], function(){
 
 		Route::get('/user/profile','Users@profile');
 		Route::post('/user/profile','Users@profileUpdate');
+
+
+		Route::get('/user/passwordchange','Users@passwordChangeView');
+		Route::post('/user/passwordchange','Users@passwordChange');
+
+
 	});
 
 	

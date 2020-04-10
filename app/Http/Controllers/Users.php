@@ -61,4 +61,47 @@ class Users extends Controller
     	}
    		
    	}
+
+   	public function passwordChangeView(Request $req)
+   	{
+   		return view('user.passChange');
+   	}
+
+   	public function passwordChange(Request $req)
+   	{
+   		$validate = Validator::make($req->all(), [
+            'currentPassword' => 'required|max:20',
+            'newPassword' => 'required|max:20|same:currentNewPassword',
+            'currentNewPassword' => 'required|max:20'
+        ]);
+
+        if ($validate->fails()) {
+    		return redirect('/user/passwordchange')
+                        ->withErrors($validate)
+                        ->withInput();
+    	}
+    	else
+    	{
+    		$data =User::where('username',$req->session()->get('userid'))->first();
+   			$user = User::find($data->toArray()['id']);
+
+   			$user->password = $req->newPassword;
+
+   			if ($user->password!=$req->newPassword) {
+   				return redirect('/user/passwordchange')->withErrors("Current Password not matching");
+   			}
+   			else
+   			{
+   				if ($user->save()) {
+	   				return redirect('/logout');
+		   		}
+		   		else
+		   		{
+		   			echo "Something wrong";
+		   		}
+   			}
+
+	   		
+    	}
+   	}
 }
