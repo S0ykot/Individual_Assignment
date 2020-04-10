@@ -38,6 +38,10 @@
 				}
 			 ?>
 			 <td align="center">{{$x}}</td>
+			 <form method="POST">
+			 	@csrf
+			 <td><input type="submit" name="submit" value="Checkout"></td>
+			</form>
 		</tr>
 	</table>
 	<a href="/">Back</a> ||

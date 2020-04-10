@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Cart;
 use App\User;
 use App\Medicine;
+use App\Order;
 class Carts extends Controller
 {
     public function index(Request $req)
@@ -53,16 +54,19 @@ class Carts extends Controller
     			$med->quantity = $data['quantity']-$req->SelectQuantity;
 
     			if ($med->save()) {
-    				echo "Added";
+    				return redirect('/user/cart')
+                       	 		->withErrors("Medicine added");
     			}
     			else
     			{
-    				echo "Something wrong";
+    				return redirect('/user/cart')
+                       	 		->withErrors("Medicine add failed");
     			}
     		}
     		else
     		{
-    			echo "Added failed";
+    			return redirect('/user/cart')
+                       	 		->withErrors("Medicine added failed");
     		}
 
     	}
@@ -161,5 +165,49 @@ class Carts extends Controller
     		return redirect('/user/cart')
                         ->withErrors(" Remove failed");
     	}
+    }
+
+    public function insert(Request $req)
+    {
+    	$cart = Cart::where('uid',$req->session()->get('uid'))->get();
+
+    	$q = '';
+    	$tc = 0;
+    	for ($i=0; $i < count($cart); $i++) { 
+    		 $q.=$cart[$i]['mid'].':'.$cart[$i]['qntity'].',';
+    		 $tc+=$cart[$i]['total_price'];
+    	}
+    	
+
+    	$order = new Order;
+
+    	$order->order_id = NULL;
+    	$order->order_date = date("Y/m/d");
+    	$order->item_quantity = $q;
+    	$order->total_cost = $tc;
+    	$order->uid = $req->session()->get('uid');
+    	$order->status = FALSE;
+
+    	if ($order->save()) {
+    		
+    		$cart = Cart::where('uid',$req->session()->get('uid'))->delete();
+
+    		if ($cart) {
+    			return redirect('/users/orders')
+                        ->withErrors(" Order Placed");
+    		}
+    		else
+    		{
+    			return redirect('/users/cart')
+                        ->withErrors(" Order not Placed");
+    		}
+    	}
+    	else
+    	{
+    		return redirect('/users/cart')
+                        ->withErrors(" Order not Placed");
+    	}
+
+
     }
 }

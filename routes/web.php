@@ -72,6 +72,8 @@ Route::group(['middleware'=>['session']], function(){
 
 
 		Route::get('/user/cart','Carts@index');
+		Route::post('/user/cart','Carts@insert');
+
 		Route::post('/details/{id}','Carts@addToCart');
 
 
@@ -79,6 +81,8 @@ Route::group(['middleware'=>['session']], function(){
 		Route::post('/user/passwordchange','Users@passwordChange');
 
 		Route::get('/user/cart/remove/{id}','Carts@cartRemove');
+		
+		Route::get('/users/orders','Orders@index');
 
 		Route::get('/user/cart/edit/{id}','Carts@cartEditView');
 		Route::post('/user/cart/edit/{id}','Carts@cartEdit');
