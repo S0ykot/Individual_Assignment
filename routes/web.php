@@ -32,6 +32,9 @@ Route::post('/signup', 'Signup@signup');
 
 Route::get('/logout', 'Logout@index');
 
+Route::get('/search/{id}','Medicines@searchMedicine');
+Route::get('/details/{id}','Medicines@medDetails');
+
 Route::group(['middleware'=>['session']], function(){
 
 
@@ -66,6 +69,10 @@ Route::group(['middleware'=>['session']], function(){
 
 		Route::get('/user/profile','Users@profile');
 		Route::post('/user/profile','Users@profileUpdate');
+
+
+		Route::get('/user/cart','Carts@index');
+		Route::post('/details/{id}','Carts@addToCart');
 
 
 		Route::get('/user/passwordchange','Users@passwordChangeView');

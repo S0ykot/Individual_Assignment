@@ -109,4 +109,5 @@ class Users extends Controller
    	{
    		return view('user.cart');
    	}
+
 }

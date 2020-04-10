@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Medicine extends Model
+class Cart extends Model
 {
-    protected $primaryKey = 'mid';
+    protected $primaryKey = 'id';
     public $timestamps = false;
 }

@@ -143,5 +143,27 @@ class Medicines extends Controller
     	}
     }
 
+    public function searchMedicine(Request $req,$id)
+    {
+        $data = DB::table('medicines')
+                ->join('subcategories','medicines.subcat_id','=','subcategories.subcat_id')
+                ->join('categories','categories.cat_id','=','subcategories.cat_id')
+                ->where('medicines.name','like','%'.$req->$id.'%')
+                ->get();
+
+        return view('search',['data'=>$data]);
+    }
+
+    public function medDetails($id)
+    {
+        $data = DB::table('medicines')
+                ->join('subcategories','medicines.subcat_id','=','subcategories.subcat_id')
+                ->join('categories','categories.cat_id','=','subcategories.cat_id')
+                ->where('medicines.mid','=',$id)
+                ->first();
+
+        return view('medDetails',['data'=>$data]);
+    }
+
 
 }

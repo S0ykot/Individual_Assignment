@@ -42,6 +42,7 @@ class Login extends Controller
                     $req->session()->put('password', md5($req->password));
                     $req->session()->put('userid', $req->username);
                     $req->session()->put('type', $check->toArray()['dept_id']);
+                    $req->session()->put('uid', $check->toArray()['uid']);
                     return redirect('/admin');
 
     			}
@@ -49,6 +50,7 @@ class Login extends Controller
                     $req->session()->put('password', md5($req->password));
                     $req->session()->put('userid', $req->username);
                     $req->session()->put('type', $check->toArray()['dept_id']);
+                    $req->session()->put('uid', $check->toArray()['uid']);
                     return redirect('/user');
                 }
     		}
