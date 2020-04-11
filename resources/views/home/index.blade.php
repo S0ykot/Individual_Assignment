@@ -46,7 +46,6 @@
 	<fieldset>
 		<h3>Search Medicine</h3>
 		<input type="text" name="search" id="search" onkeyup="search()"><button>Search</button><br>
-		<input type="checkbox" name="vendor">Vendor <input type="checkbox" name="vendor">
 		<div id="res">
 			
 		</div>

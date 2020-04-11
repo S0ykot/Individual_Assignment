@@ -27,6 +27,10 @@
 			<td>{{$data->price}}</td>
 		</tr>
 		<tr>
+			<td>Image</td>
+			<td><img src="{{URL::to('/') }}/upload/{{$data->image}}" width="100" width="100"></td>	
+		</tr>
+		<tr>
 			<td>Category :</td>
 			<td>{{$data->cat_name}}</td>
 		</tr>
@@ -54,6 +58,8 @@
 	@if($errors->any())
     {!! implode('', $errors->all('<div><br><p style="color:red">*:message</p></div>')) !!}
 	@endif
+
+	<a href="/">Back</a>
 </center>
 </body>
 </html>

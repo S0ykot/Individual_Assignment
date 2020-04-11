@@ -32,7 +32,7 @@ Route::post('/signup', 'Signup@signup');
 
 Route::get('/logout', 'Logout@index');
 
-Route::get('/search/{id}','Medicines@searchMedicine');
+Route::get('/search/{name}','Medicines@searchMedicine');
 Route::get('/details/{id}','Medicines@medDetails');
 
 Route::group(['middleware'=>['session']], function(){

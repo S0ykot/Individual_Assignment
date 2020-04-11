@@ -21,7 +21,7 @@
 <body>
 <center>
 	<h1>Add Medicine</h1>
-	<form method="POST">
+	<form method="POST" enctype='multipart/form-data'>
 		<table border="3">
 			@csrf
 			<tr>
@@ -42,6 +42,11 @@
 			<tr>
 				<td>Price :</td>
 				<td><input type="text" name="price"></td>
+			</tr>
+
+			<tr>
+				<td>Image</td>
+				<td><input type="file" name="image"></td>
 			</tr>
 
 			<tr>
@@ -84,6 +89,7 @@
 			<th>Name</th>
 			<th>Quantity</th>
 			<th>Vendor</th>
+			<th>Image</th>
 			<th>Category</th>
 			<th>SubCategory</th>
 		</tr>
@@ -93,7 +99,8 @@
 			<td>{{$m[$i]->mid}}</td>
 			<td>{{$m[$i]->name}}</td>
 			<td>{{$m[$i]->quantity}}</td>
-			<td>{{$m[$i]->vendor}}</td>
+			<td>{{$m[$i]->vendor}}</td>		
+			<td><img src="{{URL::to('/') }}/upload/{{$m[$i]->image}}" width="100" width="100"></td>		
 			<td>{{$m[$i]->cat_name}}</td>
 			<td>{{$m[$i]->subcat_name}}</td>
 			

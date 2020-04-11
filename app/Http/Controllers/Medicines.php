@@ -105,12 +105,13 @@ class Medicines extends Controller
     {	
     	
     	$validate = Validator::make($req->all(), [
-            'medicinName' => 'required|max:40',
-            'quantity' => 'required|numeric',
-            'vendor' => 'required|max:50',
-            'price' => 'required|numeric',
-            'catName' => 'required|numeric',
-            'subcat' => 'required|numeric',
+            // 'medicinName' => 'required|max:40',
+            // 'quantity' => 'required|numeric',
+            // 'vendor' => 'required|max:50',
+            // 'price' => 'required|numeric',
+            // 'catName' => 'required|numeric',
+            // 'subcat' => 'required|numeric',
+            //'image' => 'required'
         ]);
 
     	if ($validate->fails()) {
@@ -120,35 +121,40 @@ class Medicines extends Controller
     	}
     	else
     	{
-    		$med = new Medicine;
 
+            $file = $req->file('image');
+    		$med = new Medicine;
     		$med->id = NULL;
     		$med->name = $req->medicinName;
     		$med->quantity = $req->quantity;
     		$med->vendor = $req->vendor;
     		$med->price = $req->price;
     		$med->subcat_id = $req->subcat;
+            $med->image = $file->getClientOriginalName();
+            
 
     		if ($med->save()) {
+                $file->move('upload', $file->getClientOriginalName());
     			return redirect('/admin/medicine/addMedicine')
-                        ->withErrors('Medicine added successfully')
-                        ->withInput();
+                        ->withErrors('Medicine added successfully');
     		}
     		else
     		{
     			return redirect('/admin/medicine/addMedicine')
-                        ->withErrors('Medicine doesnot added')
-                        ->withInput();
+                        ->withErrors('Medicine doesnot added');
     		}
     	}
     }
 
-    public function searchMedicine(Request $req,$id)
+    public function searchMedicine(Request $req,$name)
     {
         $data = DB::table('medicines')
                 ->join('subcategories','medicines.subcat_id','=','subcategories.subcat_id')
                 ->join('categories','categories.cat_id','=','subcategories.cat_id')
-                ->where('medicines.name','like','%'.$req->$id.'%')
+                ->where('medicines.name','like','%'.$req->$name.'%')
+                ->orWhere('medicines.vendor','like','%'.$req->$name.'%')
+                ->orWhere('categories.cat_name','like','%'.$req->$name.'%')
+                ->orWhere('subcategories.subcat_name','like','%'.$req->$name.'%')
                 ->get();
 
         return view('search',['data'=>$data]);
