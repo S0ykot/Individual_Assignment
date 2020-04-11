@@ -59,6 +59,13 @@ Route::group(['middleware'=>['session']], function(){
 		Route::get('/admin/get/{id}', 'AdminHome@getSubcat');
 
 
+		Route::get('/admin/orders', 'Orders@orderView');
+		Route::get('/admin/orders/approved/{id}', 'Orders@approve');
+
+
+		Route::get('/admin/report', 'Orders@report');
+
+
 
 
 	});
